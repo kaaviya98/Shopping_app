@@ -4,7 +4,6 @@ from django.urls import reverse
 
 
 class TestModelMethod(ModelMixinTestCase, TestCase):
-
     def test_absolute_url_in_Category_model_returns_product_list_view(self):
         product_list_category = reverse(
             "shop:product_list_by_category", args=[self.first_category.slug]
@@ -21,4 +20,3 @@ class TestModelMethod(ModelMixinTestCase, TestCase):
         self.assertEqual(
             product_detail_view, self.first_product.get_absolute_url()
         )
-        

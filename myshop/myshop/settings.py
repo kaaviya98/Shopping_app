@@ -137,4 +137,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-DEFAULT_CURRENCY = 'INR'
+DEFAULT_CURRENCY = "INR"
