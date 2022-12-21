@@ -82,3 +82,23 @@ class TestListView(ModelMixinTestCase, TestCase):
             )
         )
         self.assertIn("no_image.png", response.content.decode())
+
+
+class TestDetailView(ModelMixinTestCase, TestCase):
+    def test_detail_returns_details_of_correct_product(self):
+        response = self.client.get(
+            reverse(
+                "shop:product_detail",
+                args=[self.first_product.id, self.first_product.slug],
+            )
+        )
+        self.assertEquals(response.context.get("product"), self.first_product)
+
+    def test_detail_returns_returns_404_for_invalid_details_of_product(self):
+        response = self.client.get(
+            reverse(
+                "shop:product_detail",
+                args=[self.first_product.id, "Invalid_category_slug"],
+            )
+        )
+        self.assertEquals(response.status_code, 404)
