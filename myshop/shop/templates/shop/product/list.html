@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+  <div id="sidebar">
+    <h3>Categories</h3>
+    <ul>
+      <li {% if not category %}class="selected"{% endif %}>
+        <a href="{% url "shop:product_list" %}">All</a>
+      </li>
+      {% for c in categories %}
+        <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="main" class="product-list">
+    {% if products %}
+    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+    {% for product in products %}
+      <div class="item">
+        <a href="{{ product.get_absolute_url }}">
+          {% thumbnail product.image 300x300 crop="smart" as image_thumbnail %}
+          <img src="{% if product.image %}{{ image_thumbnail.url }}{% else %}{% static "image/no_image.png" %}{% endif %}">
+        </a>
+        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        <br>
+        ${{ product.price }}
+      </div>
+    {% endfor %}
+    {% else %}<h1>No Products in this category, We will get u soon!</h1>{% endif %}
+  </div>
+{% endblock %}
